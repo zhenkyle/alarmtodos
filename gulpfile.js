@@ -84,6 +84,9 @@ gulp.task('lint', () => {
 gulp.task('lint:test', () => {
   return lint('test/spec/**/*.js', {
     fix: true,
+    "parserOptions": {
+        "sourceType": "module"
+      },
     env: {
       mocha: true
     }
@@ -164,7 +167,7 @@ gulp.task('serve:dist', () => {
   });
 });
 
-gulp.task('serve:test', ['scripts'], () => {
+gulp.task('serve:test', ['scripts','browserify-test'], () => {
   browserSync({
     notify: false,
     port: 9000, host: '0.0.0.0',
