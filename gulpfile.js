@@ -45,6 +45,25 @@ gulp.task('scripts', () => {
     .pipe(reload({stream: true}));
 });
 
+
+gulp.task('browserify-test', () => {
+
+  const b = browserify({
+    entries: 'test/spec/test.js',
+    transform: babelify,
+    debug: true
+  });
+
+  return b.bundle()
+    .pipe(source('client-test-bundle.js'))
+    .pipe($.plumber())
+    .pipe(buffer())
+    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('.tmp/scripts'))
+    .pipe(reload({stream: true}));
+});
+
 function lint(files, options) {
   return gulp.src(files)
     .pipe(reload({stream: true, once: true}))
