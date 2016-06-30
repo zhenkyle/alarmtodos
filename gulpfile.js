@@ -49,7 +49,7 @@ gulp.task('scripts', () => {
 gulp.task('browserify-test', () => {
 
   const b = browserify({
-    entries: 'test/spec/test.js',
+    entries: 'test/index.js',
     transform: babelify,
     debug: true
   });
