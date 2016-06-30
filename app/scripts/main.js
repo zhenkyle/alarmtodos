@@ -1,23 +1,9 @@
-/*global Alarmtodos, $*/
+/*global $*/
+import TodoList from './collections/todolist';
+import AppView from './views/appview';
 
+  // Create our global collection of **Todos**.
+  var Todos = new TodoList;
 
-window.Alarmtodos = {
-  Models: {},
-  Collections: {},
-  Views: {},
-  Routers: {},
-  init: function () {
-    'use strict';
-
-	// Create our global collection of **Todos**.
-	this.Todos = new this.Collections.TodoList;
-
-	// Finally, we kick things off by creating the **App**.
-	new this.Views.AppView();
-  }
-};
-
-$(document).ready(function () {
-  'use strict';
-  Alarmtodos.init();
-});
+  // Finally, we kick things off by creating the **App**.
+  var app = new AppView({collection: Todos});

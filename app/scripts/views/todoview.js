@@ -1,25 +1,20 @@
-/*global Alarmtodos, Backbone, _*/
+/*global Backbone, _*/
 
-Alarmtodos.Views = Alarmtodos.Views || {};
-
-(function () {
-  'use strict';
-
-  Alarmtodos.Views.TodoView = Backbone.View.extend({
+export default Backbone.View.extend({
 
     //... is a list tag.
-    tagName:  "li",
+    tagName:  'li',
 
     // Cache the template function for a single item.
     template: _.template($('#item-template').html()),
 
     // The DOM events specific to an item.
     events: {
-      "click .toggle"   : "toggleDone",
-      "dblclick .view"  : "edit",
-      "click a.destroy" : "clear",
-      "keypress .edit"  : "updateOnEnter",
-      "blur .edit"      : "close"
+      'click .toggle'   : 'toggleDone',
+      'dblclick .view'  : 'edit',
+      'click a.destroy' : 'clear',
+      'keypress .edit'  : 'updateOnEnter',
+      'blur .edit'      : 'close'
     },
 
     // The TodoView listens for changes to its model, re-rendering. Since there's
@@ -45,7 +40,7 @@ Alarmtodos.Views = Alarmtodos.Views || {};
 
     // Switch this view into `"editing"` mode, displaying the input field.
     edit: function() {
-      this.$el.addClass("editing");
+      this.$el.addClass('editing');
       this.input.focus();
     },
 
@@ -56,7 +51,7 @@ Alarmtodos.Views = Alarmtodos.Views || {};
         this.clear();
       } else {
         this.model.save({title: value});
-        this.$el.removeClass("editing");
+        this.$el.removeClass('editing');
       }
     },
 
@@ -71,5 +66,3 @@ Alarmtodos.Views = Alarmtodos.Views || {};
     }
 
   });
-
-})();

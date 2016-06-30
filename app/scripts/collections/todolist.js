@@ -1,17 +1,14 @@
-/*global Alarmtodos, Backbone, Backbone.Localstorage */
+/*global Backbone, Backbone.Localstorage */
 
-Alarmtodos.Collections = Alarmtodos.Collections || {};
+import Todo from '../models/todo'
 
-(function () {
-  'use strict';
-
-  Alarmtodos.Collections.TodoList = Backbone.Collection.extend({
+export default Backbone.Collection.extend({
 
     // Reference to this collection's model.
-    model: Alarmtodos.Models.Todo,
+    model: Todo,
 
     // Save all of the todo items under the `"todos-backbone"` namespace.
-    localStorage: new Backbone.LocalStorage("todos-backbone"),
+    localStorage: new Backbone.LocalStorage('todos-backbone'),
 
     // Filter down the list of all todo items that are finished.
     done: function() {
@@ -36,5 +33,3 @@ Alarmtodos.Collections = Alarmtodos.Collections || {};
     }
 
   });
-
-})();
