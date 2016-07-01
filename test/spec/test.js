@@ -18,7 +18,7 @@ import sinon from 'sinon';
         assert.equal(todo.get('order'),0);
       });
       it('should run here few assertions', function () {
-        var todo = new Todo({title:'abc',collection: {nextOrder: sinon.stub().returns(42)}});
+        var todo = new Todo({title:'abc'},{collection: {nextOrder: sinon.stub().returns(42)}});
         assert.equal(todo.get('title'),'abc');
         assert.equal(todo.get('order'),42);
       });
