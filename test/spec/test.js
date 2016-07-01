@@ -9,8 +9,8 @@ import Todo from '../../app/scripts/models/todo';
     describe('maybe a bit more context here', function () {
       it('should run here few assertions', function () {
         var Todos = new TodoList;
-      	var todo = new Todo({collection: Todos });
-		assert.equal(todo.title,"empty title...");
+      	var todo = Todos.create({collection: this});
+		    assert.equal(todo.get('title'),'empty todo...');
       });
     });
   });

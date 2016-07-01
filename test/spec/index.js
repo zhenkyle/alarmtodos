@@ -1,5 +1,5 @@
 (function () {
   'use strict';
 
-  require('./spec/test');
+  require('./test');
 })();

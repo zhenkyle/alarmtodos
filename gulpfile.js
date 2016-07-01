@@ -49,7 +49,7 @@ gulp.task('scripts', () => {
 gulp.task('browserify-test', () => {
 
   const b = browserify({
-    entries: 'test/index.js',
+    entries: 'test/spec/index.js',
     transform: babelify,
     debug: true
   });
@@ -91,7 +91,7 @@ gulp.task('lint:test', () => {
       mocha: true
     }
   })
-    .pipe(gulp.dest('test/spec/**/*.js'));
+    .pipe(gulp.dest('test/spec'));
 });
 
 gulp.task('html', ['styles', 'scripts'], () => {
@@ -182,7 +182,8 @@ gulp.task('serve:test', ['scripts','browserify-test'], () => {
   });
 
   gulp.watch('app/scripts/**/*.js', ['scripts']);
-  gulp.watch('test/spec/**/*.js').on('change', reload);
+  gulp.watch('test/spec/**/*.js', ['browserify-test']);
+  //gulp.watch('test/spec/**/*.js').on('change', reload);
   gulp.watch('test/spec/**/*.js', ['lint:test']);
 });
 
