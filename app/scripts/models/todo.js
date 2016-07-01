@@ -6,7 +6,7 @@ export default Backbone.Model.extend({
     defaults: function() {
       return {
         title: 'empty todo...',
-        order: this.collection.nextOrder(),
+        order: this.collection == undefined ? 0 : this.collection.nextOrder(),
         done: false
       };
     },
