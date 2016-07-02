@@ -1,4 +1,4 @@
-import Todo from '../../app/scripts/models/todo';
+import Todo from 'app/models/todo';
 import sinon from 'sinon';
   
   (function () {
