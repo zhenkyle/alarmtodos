@@ -1,6 +1,6 @@
 /*global Backbone, Backbone.Localstorage */
 
-import Todo from '../models/todo'
+import Todo from '../models/todo';
 
 export default Backbone.Collection.extend({
 

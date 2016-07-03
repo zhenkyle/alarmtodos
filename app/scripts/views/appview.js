@@ -1,5 +1,5 @@
 /*global Backbone, _, Todos*/
-import TodoView from './todoview'
+import TodoView from './todoview';
 
 export default Backbone.View.extend({
 
@@ -71,7 +71,7 @@ export default Backbone.View.extend({
       if (e.keyCode != 13) return;
       if (!this.input.val()) return;
 
-      this.collection.create({title: this.input.val(), collection: this.collection});
+      this.collection.create({title: this.input.val()});
       this.input.val('');
     },
 

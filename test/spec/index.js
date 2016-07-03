@@ -1,5 +1,6 @@
 (function () {
   'use strict';
 
-  require('./test');
+  require('./unit/models/todo_spec.js');
+  require('./localstorage_spec.js');
 })();
