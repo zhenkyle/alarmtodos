@@ -63,7 +63,7 @@
     <script type="text/template" id="item-template">
       <div class="view">
         <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
-        <label><%- title %></label>
+        <label><%- title %> / <%- time %></label>
         <a class="destroy"></a>
       </div>
       <input class="edit" type="text" value="<%- title %>" />
@@ -74,6 +74,9 @@
         <a id="clear-completed">Clear <%= done %> completed <%= done == 1 ? 'item' : 'items' %></a>
       <% } %>
       <div class="todo-count"><b><%= remaining %></b> <%= remaining == 1 ? 'item' : 'items' %> left</div>
+      <% if (remaining) { %>
+        <a id="start-alarm"> Start alarm</a>
+      <% } %>
     </script>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

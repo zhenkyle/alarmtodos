@@ -7,7 +7,8 @@ export default Backbone.Model.extend({
       return {
         title: 'empty todo...',
         order: this.collection == undefined ? 0 : this.collection.nextOrder(),
-        done: false
+        done: false,
+        time: 1500
       };
     },
 

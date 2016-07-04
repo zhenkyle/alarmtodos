@@ -14,7 +14,8 @@ export default Backbone.View.extend({
     events: {
       'keypress #new-todo':  'createOnEnter',
       'click #clear-completed': 'clearCompleted',
-      'click #toggle-all': 'toggleAllComplete'
+      'click #toggle-all': 'toggleAllComplete',
+      'click #start-alarm': 'startAlarm'
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -84,6 +85,13 @@ export default Backbone.View.extend({
     toggleAllComplete: function () {
       var done = this.allCheckbox.checked;
       this.collection.each(function (todo) { todo.save({'done': done}); });
+    },
+
+    startAlarm: function () {
+      var func = function(){this.collection.first().set({'time': 1000})};
+      func = _.bind(func, this);
+      _.delay(func,5000);
+      //this.collection.first().set({'time': 1000});
     }
 
   });
