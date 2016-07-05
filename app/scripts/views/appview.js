@@ -15,7 +15,8 @@ export default Backbone.View.extend({
       'keypress #new-todo':  'createOnEnter',
       'click #clear-completed': 'clearCompleted',
       'click #toggle-all': 'toggleAllComplete',
-      'click #start-alarm': 'startAlarm'
+      'click #start-alarm': 'startAlarm',
+      'click #stop-alarm': 'stopAlarm'
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -33,6 +34,8 @@ export default Backbone.View.extend({
       this.footer = this.$('footer');
       this.main = $('#main');
 
+      this.timeoutID = null;
+
       this.collection.fetch();
     },
 
@@ -41,11 +44,12 @@ export default Backbone.View.extend({
     render: function() {
       var done = this.collection.done().length;
       var remaining = this.collection.remaining().length;
+      var timeoutID = this.timeoutID;
 
       if (this.collection.length) {
         this.main.show();
         this.footer.show();
-        this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
+        this.footer.html(this.statsTemplate({done: done, remaining: remaining, timeoutID: timeoutID}));
       } else {
         this.main.hide();
         this.footer.hide();
@@ -88,10 +92,17 @@ export default Backbone.View.extend({
     },
 
     startAlarm: function () {
-      var func = function(){this.collection.first().set({'time': 1000})};
-      func = _.bind(func, this);
-      _.delay(func,5000);
-      //this.collection.first().set({'time': 1000});
+      var time = this.collection.first().get('time');
+      this.collection.first().set({'time': time -1 });
+      var func = _.bind(this.startAlarm,this);
+      this.timeoutID = _.delay(func,1000);
+      this.render();
+    },
+
+    stopAlarm: function () {
+      clearTimeout(this.timeoutID);
+      this.timeoutID = null;
+      this.render();
     }
 
   });

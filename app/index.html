@@ -74,9 +74,13 @@
         <a id="clear-completed">Clear <%= done %> completed <%= done == 1 ? 'item' : 'items' %></a>
       <% } %>
       <div class="todo-count"><b><%= remaining %></b> <%= remaining == 1 ? 'item' : 'items' %> left</div>
-      <% if (remaining) { %>
+      <% if (remaining) { 
+           if (!timeoutID) { %>
         <a id="start-alarm"> Start alarm</a>
-      <% } %>
+      <%   } else { %>
+        <a id="stop-alarm"> Stop alarm</a>
+      <%   }
+         } %>
     </script>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

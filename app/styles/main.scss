@@ -160,7 +160,7 @@ body {
   border-radius: 0 0 5px 5px;
 }
 
-#clear-completed, #start-alarm {
+#clear-completed, #start-alarm, #stop-alarm {
   float: right;
   line-height: 20px;
   text-decoration: none;
@@ -184,6 +184,11 @@ body {
 }
 
 #start-alarm {
+  float: left;
+  margin-left: 10px;
+}
+
+#stop-alarm {
   float: left;
   margin-left: 10px;
 }
