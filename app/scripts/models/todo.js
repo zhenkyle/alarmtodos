@@ -8,7 +8,7 @@ export default Backbone.Model.extend({
         title: 'empty todo...',
         order: this.collection == undefined ? 0 : this.collection.nextOrder(),
         done: false,
-        elpase: 10  // in seconds
+        elapse: 1500  // in seconds
       };
     },
 

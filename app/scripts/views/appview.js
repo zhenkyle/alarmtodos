@@ -81,18 +81,26 @@ export default Backbone.View.extend({
     createOnEnter: function(e) {
       if (e.keyCode != 13) return;
       if (!this.input.val()) return;
-
-      this.collection.create({title: this.input.val()});
+      var splits = this.input.val().split('/', 2);
+      splits[1] = splits[1] || 25;
+      splits[1] = eval(splits[1].valueOf()*60);
+      this.collection.create({title: splits[0], elapse: splits[1]});
       this.input.val('');
     },
 
     // Clear all done todo items, destroying their models.
     clearCompleted: function() {
+      clearTimeout(this.timeoutID);
+      this.first_remaining = null;
+      this.timeoutID = null;
       _.invoke(this.collection.done(), 'destroy');
       return false;
     },
 
     toggleAllComplete: function () {
+      clearTimeout(this.timeoutID);
+      this.first_remaining = null;
+      this.timeoutID = null;
       var done = this.allCheckbox.checked;
       this.collection.each(function (todo) { todo.save({'done': done}); });
     },
@@ -102,16 +110,16 @@ export default Backbone.View.extend({
         this.first_remaining = _.first(this.collection.remaining());
         var func = _.bind(this.startAlarm,this);
         this.timeoutID = _.delay(func,1000);
-        this.render(); // render after timoutID change
+        this.render(); // render footer after timoutID change
         return;
       }
-      var elpase = this.first_remaining.get('elpase');
-      if (elpase <= 1 ) {
-        this.first_remaining.fetch(); //restore model's elpase to localStorage value
+      var elapse = this.first_remaining.get('elapse');
+      if (elapse <= 1 ) {
+        this.first_remaining.fetch(); //restore model's elapse to localStorage value
         this.first_remaining.set({done: true});  // don't save automatic done to localStorage
         this.first_remaining = null;
         this.timeoutID = null;
-        this.render(); // render after timoutID change
+        this.render(); // render footer after timoutID change
         this.beep.beep([
           [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
           [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
@@ -121,10 +129,9 @@ export default Backbone.View.extend({
           [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300]
           ]);
       } else {
-        this.first_remaining.set({'elpase': elpase -1 });
+        this.first_remaining.set({'elapse': elapse -1 });
         var func = _.bind(this.startAlarm,this);
         this.timeoutID = _.delay(func,1000);
-        this.render(); // render after timoutID change
         this.beep.beep([[1000, 100]]);
       }
     },
@@ -133,7 +140,7 @@ export default Backbone.View.extend({
       clearTimeout(this.timeoutID);
       this.first_remaining = null;
       this.timeoutID = null;
-      this.render(); // render after timoutID change
+      this.render(); // render footer after timoutID change
     }
 
   });

@@ -28,7 +28,7 @@ export default Backbone.View.extend({
 
     // Re-render the titles of the todo item.
     render: function() {
-      this.$el.html(this.template(_.extend(this.model.toJSON(),{formated_seconds: formated_seconds(this.model.get('elpase'))})));
+      this.$el.html(this.template(_.extend(this.model.toJSON(),{formated_seconds: formated_seconds(this.model.get('elapse'))})));
       this.$el.toggleClass('done', this.model.get('done'));
       this.input = this.$('.edit');
       return this;
@@ -51,7 +51,10 @@ export default Backbone.View.extend({
       if (!value) {
         this.clear();
       } else {
-        this.model.save({title: value});
+        var splits = value.split('/', 2);
+        splits[1] = splits[1] || 25;
+        splits[1] = parseInt(eval(splits[1].valueOf())*60);
+        this.model.save({title: splits[0], elapse: splits[1]});
         this.$el.removeClass('editing');
       }
     },
