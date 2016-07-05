@@ -2,6 +2,7 @@
 import TodoList from './collections/todolist';
 import AppView from './views/appview';
 
+
   // Create our global collection of **Todos**.
   var Todos = new TodoList;
 

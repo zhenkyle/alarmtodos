@@ -45,5 +45,9 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "beepjs": "github:klathmon/Beep.js",
+    "parse-seconds": "^1.0.0"
   }
 }

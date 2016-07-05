@@ -63,7 +63,7 @@
     <script type="text/template" id="item-template">
       <div class="view">
         <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
-        <label><%- title %> / <%- time %></label>
+        <label><%- title %> / <%- formated_seconds %></label>
         <a class="destroy"></a>
       </div>
       <input class="edit" type="text" value="<%- title %>" />

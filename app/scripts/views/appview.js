@@ -1,5 +1,6 @@
 /*global Backbone, _, Todos*/
 import TodoView from './todoview';
+import Beep from 'beepjs';
 
 export default Backbone.View.extend({
 
@@ -35,6 +36,11 @@ export default Backbone.View.extend({
       this.main = $('#main');
 
       this.timeoutID = null;
+      this.first_remaining = null;
+
+      var volume = 1 // Volume is a float. 0 is silenced, 1 is full volume
+      var waveType = 'square' // WaveType is a string that describes the shape of the sound wave. Options are 'square', 'sine', 'triangle', or 'sawtooth'.
+      this.beep = new Beep(volume, waveType);
 
       this.collection.fetch();
     },
@@ -92,17 +98,42 @@ export default Backbone.View.extend({
     },
 
     startAlarm: function () {
-      var time = this.collection.first().get('time');
-      this.collection.first().set({'time': time -1 });
-      var func = _.bind(this.startAlarm,this);
-      this.timeoutID = _.delay(func,1000);
-      this.render();
+      if (!this.timeoutID) {
+        this.first_remaining = _.first(this.collection.remaining());
+        var func = _.bind(this.startAlarm,this);
+        this.timeoutID = _.delay(func,1000);
+        this.render(); // render after timoutID change
+        return;
+      }
+      var elpase = this.first_remaining.get('elpase');
+      if (elpase <= 1 ) {
+        this.first_remaining.fetch(); //restore model's elpase to localStorage value
+        this.first_remaining.set({done: true});  // don't save automatic done to localStorage
+        this.first_remaining = null;
+        this.timeoutID = null;
+        this.render(); // render after timoutID change
+        this.beep.beep([
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300],
+          [1000, 100],[0, 100],[1000, 100],[0, 100],[1000, 100],[0, 300]
+          ]);
+      } else {
+        this.first_remaining.set({'elpase': elpase -1 });
+        var func = _.bind(this.startAlarm,this);
+        this.timeoutID = _.delay(func,1000);
+        this.render(); // render after timoutID change
+        this.beep.beep([[1000, 100]]);
+      }
     },
 
     stopAlarm: function () {
       clearTimeout(this.timeoutID);
+      this.first_remaining = null;
       this.timeoutID = null;
-      this.render();
+      this.render(); // render after timoutID change
     }
 
   });

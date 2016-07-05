@@ -8,7 +8,7 @@ export default Backbone.Model.extend({
         title: 'empty todo...',
         order: this.collection == undefined ? 0 : this.collection.nextOrder(),
         done: false,
-        time: 1500
+        elpase: 10  // in seconds
       };
     },
 
@@ -21,6 +21,7 @@ export default Backbone.Model.extend({
 
     // Toggle the `done` state of this todo item.
     toggle: function() {
+      this.fetch();
       this.save({done: !this.get('done')});
     }
 

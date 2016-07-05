@@ -1,4 +1,5 @@
 /*global Backbone, _*/
+import formated_seconds from 'app/utils/formated_seconds';
 
 export default Backbone.View.extend({
 
@@ -27,7 +28,7 @@ export default Backbone.View.extend({
 
     // Re-render the titles of the todo item.
     render: function() {
-      this.$el.html(this.template(this.model.toJSON()));
+      this.$el.html(this.template(_.extend(this.model.toJSON(),{formated_seconds: formated_seconds(this.model.get('elpase'))})));
       this.$el.toggleClass('done', this.model.get('done'));
       this.input = this.$('.edit');
       return this;
