@@ -13,6 +13,7 @@ export default Backbone.View.extend({
     events: {
       'click .toggle'   : 'toggleDone',
       'dblclick .view'  : 'edit',
+      'touchstart .view': 'edit',
       'click a.destroy' : 'clear',
       'keypress .edit'  : 'updateOnEnter',
       'blur .edit'      : 'close'
